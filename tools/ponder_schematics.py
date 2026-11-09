@@ -104,8 +104,9 @@ write('copycat_headstock', (5, 2, 5), b)
 b = base()
 b[(2, 1, 2)] = ('create:shaft', {'axis': 'y'})
 b[(2, 2, 2)] = (L_ + 'turntable_bearing', {'facing': 'up', 'assembled': 'false', 'powered': 'false'})
+# the platform is ordinary blocks: the bearing makes its own plate block when it assembles
 for x in (1, 2, 3):
-    for z in (1, 2, 3): b[(x, 3, z)] = (L_ + 'turntable_plate', {'facing': 'up'})
+    for z in (1, 2, 3): b[(x, 3, z)] = ('minecraft:spruce_planks', {})
 for z in (1, 2, 3): b[(2, 4, z)] = ('create:track', {'shape': 'zo', 'turn': 'false', 'waterlogged': 'false'})
 b[(0, 1, 2)] = ('create:andesite_casing', {})
 b[(0, 2, 2)] = ('minecraft:lever', {'face': 'floor', 'facing': 'east', 'powered': 'false'})

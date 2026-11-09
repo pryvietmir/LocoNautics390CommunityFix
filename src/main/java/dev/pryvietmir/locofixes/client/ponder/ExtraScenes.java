@@ -321,7 +321,7 @@ public final class ExtraScenes {
         scene.world().showSection(util.select().fromTo(2, 1, 2, 2, 2, 2), Direction.DOWN);
         scene.idle(15);
         scene.overlay().showText(70)
-                .text("The Turntable Bearing turns a plate by an exact angle, then holds it there")
+                .text("The Turntable Bearing turns the platform in front of it by an exact angle, then holds it there")
                 .attachKeyFrame().placeNearTarget().pointAt(util.vector().topOf(bearing));
         scene.idle(80);
         ElementLink<WorldSectionElement> plate = scene.world().showIndependentSection(util.select().fromTo(1, 3, 1, 3, 4, 3), Direction.DOWN);
@@ -331,7 +331,7 @@ public final class ExtraScenes {
         scene.idle(10);
         scene.world().modifyBlock(bearing, set("assembled", "true"), false);
         scene.overlay().showText(70)
-                .text("Right Click it with an empty hand to assemble the plate in front of it")
+                .text("Right Click it with an empty hand to turn the blocks in front of it into a turning platform")
                 .attachKeyFrame().placeNearTarget().pointAt(util.vector().blockSurface(bearing, Direction.WEST));
         scene.idle(80);
         scene.world().setKineticSpeed(util.select().fromTo(2, 1, 2, 2, 2, 2), 16);
@@ -357,11 +357,11 @@ public final class ExtraScenes {
                 .attachKeyFrame().placeNearTarget().pointAt(util.vector().blockSurface(bearing, Direction.WEST));
         scene.idle(100);
         scene.overlay().showText(90)
-                .text("Sneak Click it with a Train Signal to bind the signal: it then stays red while the plate is turned away or holds a train")
+                .text("Sneak Click it with a Train Signal to bind the signal: it then stays red while the platform is turned away or holds a train")
                 .attachKeyFrame().placeNearTarget().pointAt(util.vector().topOf(2, 4, 2));
         scene.idle(100);
         scene.overlay().showText(60)
-                .text("A train longer than the plate can't be turned")
+                .text("A train longer than the platform can't be turned")
                 .colored(PonderPalette.RED).placeNearTarget().pointAt(util.vector().topOf(2, 4, 2));
         scene.idle(70);
     }
