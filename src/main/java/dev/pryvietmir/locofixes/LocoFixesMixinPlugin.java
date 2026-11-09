@@ -32,6 +32,7 @@ public final class LocoFixesMixinPlugin implements IMixinConfigPlugin {
     private static final Set<String> FORK_SAFE = Set.of(
             "dev.pryvietmir.locofixes.mixin.WheelSupportsMixin",
             "dev.pryvietmir.locofixes.mixin.HoseLinkWrenchMixin",
+            "dev.pryvietmir.locofixes.mixin.SmallEngineBlockEntityMixin",
             "dev.pryvietmir.locofixes.mixin.DebugLinesClientMixin");
 
     @Override
@@ -45,7 +46,7 @@ public final class LocoFixesMixinPlugin implements IMixinConfigPlugin {
             LOG.info("[loconautics_fixes] Loconautics {} — патч применяется.", version);
         } else if (version.startsWith("0.39+")) {
             forkBuild = true;
-            LOG.info("[loconautics_fixes] Loconautics {} (сборка форка) — применяется только скрытие отладочных линий.", version);
+            LOG.info("[loconautics_fixes] Loconautics {} (сборка форка) — применяются только фиксы, которых нет в форке.", version);
         } else {
             enabled = false;
             LOG.warn("[loconautics_fixes] Loconautics {} не проверялся (проверено: {}). Патч ОТКЛЮЧЁН, "
@@ -79,6 +80,10 @@ public final class LocoFixesMixinPlugin implements IMixinConfigPlugin {
     private static final String BRIDGE_DESC =
             "(Lcom/simibubi/create/foundation/blockEntity/SmartBlockEntity;)Lcom/simibubi/create/foundation/blockEntity/behaviour/BlockEntityBehaviour;";
 
+    private static final String SOUND_MANAGER = "net/minecraft/client/sounds/SoundManager";
+    private static final String SOUND_BRIDGE_OWNER = "dev/pryvietmir/locofixes/client/EngineSoundBridge";
+    private static final String SOUND_BRIDGE_DESC = "(Lnet/minecraft/client/sounds/SoundManager;Ljava/lang/Object;)V";
+
     @Override
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
         if (!SMALL_ENGINE.equals(targetClassName.replace('/', '.'))) {
@@ -101,8 +106,30 @@ public final class LocoFixesMixinPlugin implements IMixinConfigPlugin {
         if (patched > 0) {
             LOG.info("[loconautics_fixes] SmallEngineBlockEntity: made Create Propulsion optional ({} call(s) patched)", patched);
         } else {
-            LOG.warn("[loconautics_fixes] SmallEngineBlockEntity: PropulsionEngineHeat.create call not found, nothing patched");
+            LOG.info("[loconautics_fixes] SmallEngineBlockEntity: PropulsionEngineHeat.create call not found, nothing to patch");
         }
+
+        // SoundManager.play(SoundInstance) is called with a SmallEngineSound. To check that call the JVM
+        // verifier loads SmallEngineSound, whose superclass is client-only, so on a dedicated server the
+        // whole block entity class fails to load: engines cannot be placed and turn into ghost blocks.
+        // Route the call through a helper that takes Object, so nothing client-only is loaded on the server.
+        int sounds = 0;
+        for (MethodNode method : targetClass.methods) {
+            List<AbstractInsnNode> found = new java.util.ArrayList<>();
+            for (AbstractInsnNode insn : method.instructions) {
+                if (insn.getOpcode() == Opcodes.INVOKEVIRTUAL && insn instanceof MethodInsnNode call
+                        && SOUND_MANAGER.equals(call.owner) && "play".equals(call.name)
+                        && "(Lnet/minecraft/client/resources/sounds/SoundInstance;)V".equals(call.desc)) {
+                    found.add(insn);
+                }
+            }
+            for (AbstractInsnNode insn : found) {
+                method.instructions.set(insn, new MethodInsnNode(Opcodes.INVOKESTATIC,
+                        SOUND_BRIDGE_OWNER, "play", SOUND_BRIDGE_DESC, false));
+                sounds++;
+            }
+        }
+        LOG.info("[loconautics_fixes] SmallEngineBlockEntity: made server-safe ({} sound call(s) patched)", sounds);
     }
     @Override public void postApply(String t, ClassNode c, String m, IMixinInfo i) {}
 }
