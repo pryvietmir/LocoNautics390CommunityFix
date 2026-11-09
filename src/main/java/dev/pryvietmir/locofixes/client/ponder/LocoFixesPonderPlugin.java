@@ -30,7 +30,7 @@ public final class LocoFixesPonderPlugin implements PonderPlugin {
                 .addStoryBoard("screw_link", ExtraScenes::screwLink);
         helper.forComponents(loco("copycat_headstock"))
                 .addStoryBoard("copycat_headstock", ExtraScenes::copycatHeadstock);
-        helper.forComponents(loco("turntable_bearing"), loco("turntable_plate"))
+        helper.forComponents(loco("turntable_bearing"))
                 .addStoryBoard("turntable", ExtraScenes::turntable);
         helper.forComponents(loco("industrial_pump"), loco("industrial_pipe"), loco("industrial_glass_pipe"),
                         loco("industrial_smart_pipe"), loco("industrial_valve"))
