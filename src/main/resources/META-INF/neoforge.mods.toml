@@ -1,0 +1,38 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="Loconautics Fixes"
+authors="pryvietmir"
+description='''
+Неофициальный патч для Create: Loconautics 0.39.
+Закрывает серверные эксплойты (подмена предметов, перенос чужих поездов),
+утечку памяти клиента и спам отладочных логов.
+'''
+
+[[mixins]]
+config="loconautics_fixes.mixins.json"
+
+[[dependencies.${mod_id}]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.22)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="loconautics"
+type="required"
+versionRange="[0.39,)"
+ordering="AFTER"
+side="BOTH"
