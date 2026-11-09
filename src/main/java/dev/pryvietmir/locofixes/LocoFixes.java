@@ -33,7 +33,6 @@ public final class LocoFixes {
 
         if (FMLEnvironment.dist.isClient()) {
             ClientCleanup.register();
-            dev.pryvietmir.locofixes.client.ponder.LocoFixesPonder.register(modBus);
         }
     }
 
