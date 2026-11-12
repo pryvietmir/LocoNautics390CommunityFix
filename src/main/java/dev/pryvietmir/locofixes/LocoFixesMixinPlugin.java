@@ -33,7 +33,8 @@ public final class LocoFixesMixinPlugin implements IMixinConfigPlugin {
             "dev.pryvietmir.locofixes.mixin.WheelSupportsMixin",
             "dev.pryvietmir.locofixes.mixin.HoseLinkWrenchMixin",
             "dev.pryvietmir.locofixes.mixin.SmallEngineBlockEntityMixin",
-            "dev.pryvietmir.locofixes.mixin.DebugLinesClientMixin");
+            "dev.pryvietmir.locofixes.mixin.DebugLinesClientMixin",
+            "dev.pryvietmir.locofixes.mixin.BoilerValveSceneMixin");
 
     @Override
     public void onLoad(String mixinPackage) {
@@ -67,7 +68,8 @@ public final class LocoFixesMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (!enabled) return false;
-        return !forkBuild || FORK_SAFE.contains(mixinClassName);
+        // the verify.* mixins only make classes server-safe; the fork has the same problem, so they always apply
+        return !forkBuild || FORK_SAFE.contains(mixinClassName) || mixinClassName.startsWith(VERIFY_PREFIX);
     }
 
     @Override public String getRefMapperConfig() { return null; }
@@ -80,13 +82,17 @@ public final class LocoFixesMixinPlugin implements IMixinConfigPlugin {
     private static final String BRIDGE_DESC =
             "(Lcom/simibubi/create/foundation/blockEntity/SmartBlockEntity;)Lcom/simibubi/create/foundation/blockEntity/behaviour/BlockEntityBehaviour;";
 
+    private static final String VERIFY_PREFIX = "dev.pryvietmir.locofixes.mixin.verify.";
     private static final String SOUND_MANAGER = "net/minecraft/client/sounds/SoundManager";
     private static final String SOUND_BRIDGE_OWNER = "dev/pryvietmir/locofixes/client/EngineSoundBridge";
     private static final String SOUND_BRIDGE_DESC = "(Lnet/minecraft/client/sounds/SoundManager;Ljava/lang/Object;)V";
 
     @Override
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-        if (!SMALL_ENGINE.equals(targetClassName.replace('/', '.'))) {
+        String dotted = targetClassName.replace('/', '.');
+        // Casts first, so the rewrites below still find the calls they look for.
+        VerifierSafety.applyOnce(dotted, targetClass);
+        if (!SMALL_ENGINE.equals(dotted)) {
             return;
         }
         // Swap PropulsionEngineHeat.create(..) -> PropulsionHeatBridge.create(..), which returns the base

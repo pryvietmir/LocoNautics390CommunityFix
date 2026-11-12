@@ -7,6 +7,8 @@ Install it next to the original `loconautics-0.39.jar`. It does not contain or m
 
 - **Block placement on dedicated servers.** No block could be placed on a server: every right-click crashed the event because a server-side handler loaded a client-only class.
 - **Ghost engines on dedicated servers.** Small combustion engines could not be placed on a server and turned into ghost blocks that reappeared, because the engine class pulled in a client-only sound class.
+- **Client-only code on dedicated servers.** Loconautics passes client-only values (ClientLevel, LocalPlayer, its own screens and sounds) where other types are expected; the JVM then loads client classes on the server and the whole class fails (e.g. placing a gauge on a panel). The patch inserts casts at the 76 places found by `tools/vscan`, so those checks only happen on the client.
+- **Safety valve Ponder scene.** The boiler schematic used a removed block, so the valve on top was missing.
 - **Diesel engine crash without Create Propulsion.** Placing, loading or viewing the engine in Ponder no longer crashes when Create Propulsion is not installed.
 - **Block variant exploit.** The server rejects variant-change packets that swap a block into a different block family (item duplication / conversion).
 - **Train relocation exploit.** The server checks that the player actually holds the Creative Train Relocator.
