@@ -10,27 +10,34 @@ authors="pryvietmir"
 description='''
 Неофициальный патч для Create: Loconautics 0.39.
 Закрывает серверные эксплойты (подмена предметов, перенос чужих поездов),
-утечку памяти клиента и спам отладочных логов.
+краш двигателя без Create Propulsion, отладочные линии над вагонами,
+утечку памяти клиента, спам отладочных логов,
+невозможность ставить блоки и двигатели-призраки
+на выделенном сервере.
+Убирает обращения к клиентским классам на сервере (манометр на панели и др.),
+чинит сцену ponder с предохранительным клапаном.
+Не даёт колёсам сошедшей с рельс тележки проваливаться в землю.
+Добавляет ponder-сцены для блоков Loconautics, у которых их не было.
 '''
 
 [[mixins]]
 config="loconautics_fixes.mixins.json"
 
-[[dependencies.${mod_id}]]
+[[dependencies.loconautics_fixes]]
 modId="neoforge"
 type="required"
 versionRange="[21.1,)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.${mod_id}]]
+[[dependencies.loconautics_fixes]]
 modId="minecraft"
 type="required"
 versionRange="[1.21.1,1.22)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.${mod_id}]]
+[[dependencies.loconautics_fixes]]
 modId="loconautics"
 type="required"
 versionRange="[0.39,)"

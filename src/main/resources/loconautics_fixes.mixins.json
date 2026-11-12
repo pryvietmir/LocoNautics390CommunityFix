@@ -11,6 +11,7 @@
     "StallWatchdogMixin",
     "SmallEngineBlockEntityMixin",
     "WheelSupportsMixin",
+    "GhostWheelContactMixin",
     "verify.Verify00",
     "verify.Verify01",
     "verify.Verify02",

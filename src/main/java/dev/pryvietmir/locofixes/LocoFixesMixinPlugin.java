@@ -34,7 +34,8 @@ public final class LocoFixesMixinPlugin implements IMixinConfigPlugin {
             "dev.pryvietmir.locofixes.mixin.HoseLinkWrenchMixin",
             "dev.pryvietmir.locofixes.mixin.SmallEngineBlockEntityMixin",
             "dev.pryvietmir.locofixes.mixin.DebugLinesClientMixin",
-            "dev.pryvietmir.locofixes.mixin.BoilerValveSceneMixin");
+            "dev.pryvietmir.locofixes.mixin.BoilerValveSceneMixin",
+            "dev.pryvietmir.locofixes.mixin.GhostWheelContactMixin");
 
     @Override
     public void onLoad(String mixinPackage) {
