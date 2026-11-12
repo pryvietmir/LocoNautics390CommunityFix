@@ -329,7 +329,7 @@ public final class ExtraScenes {
         scene.idle(15);
         scene.overlay().showControls(util.vector().blockSurface(bearing, Direction.WEST), Pointing.LEFT, 40).rightClick();
         scene.idle(10);
-        scene.world().modifyBlock(bearing, set("assembled", "true"), false);
+        // Keep the bearing in its default look: the "assembled" model has no yellow top plate.
         scene.overlay().showText(70)
                 .text("Right Click it with an empty hand to turn the blocks in front of it into a turning platform")
                 .attachKeyFrame().placeNearTarget().pointAt(util.vector().blockSurface(bearing, Direction.WEST));
