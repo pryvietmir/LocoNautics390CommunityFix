@@ -12,6 +12,7 @@
     "SmallEngineBlockEntityMixin",
     "WheelSupportsMixin",
     "GhostWheelContactMixin",
+    "StrayWheelRecallMixin",
     "verify.Verify00",
     "verify.Verify01",
     "verify.Verify02",

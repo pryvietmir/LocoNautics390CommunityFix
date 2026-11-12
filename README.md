@@ -11,6 +11,7 @@ Install it next to the original `loconautics-0.39.jar`. It does not contain or m
 - **Safety valve Ponder scene.** The boiler schematic used a removed block, so the valve on top was missing.
 - **Boiler assembly Ponder scene.** The scene never showed the safety valve, leaving a hole on top of the barrel.
 - **Derailed bogeys sinking into the ground.** Once a bogey leaves the rails its wheel colliders now keep their contacts with the ground instead of falling through it.
+- **Derailed bogeys losing their wheels.** A derailed bogey's wheel collider could stay wedged in the track while the car slid away; it is now moved back under its bogey.
 - **Diesel engine crash without Create Propulsion.** Placing, loading or viewing the engine in Ponder no longer crashes when Create Propulsion is not installed.
 - **Block variant exploit.** The server rejects variant-change packets that swap a block into a different block family (item duplication / conversion).
 - **Train relocation exploit.** The server checks that the player actually holds the Creative Train Relocator.
