@@ -37,7 +37,11 @@ public final class LocoFixesMixinPlugin implements IMixinConfigPlugin {
             "dev.pryvietmir.locofixes.mixin.BoilerValveSceneMixin",
             "dev.pryvietmir.locofixes.mixin.GhostWheelContactMixin",
             "dev.pryvietmir.locofixes.mixin.StrayWheelRecallMixin",
-            "dev.pryvietmir.locofixes.mixin.GhostWheelHeightMixin");
+            "dev.pryvietmir.locofixes.mixin.GhostWheelHeightMixin",
+            "dev.pryvietmir.locofixes.mixin.EarlyPartialModelsMixin",
+            "dev.pryvietmir.locofixes.mixin.PsiRangeMixin",
+            "dev.pryvietmir.locofixes.mixin.PortalTwinNoDropMixin",
+            "dev.pryvietmir.locofixes.mixin.TrackBufferStopMixin");
 
     @Override
     public void onLoad(String mixinPackage) {

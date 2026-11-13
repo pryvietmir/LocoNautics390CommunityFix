@@ -13,6 +13,10 @@ Install it next to the original `loconautics-0.39.jar`. It does not contain or m
 - **Derailed bogeys sinking into the ground.** Once a bogey leaves the rails its wheel colliders now keep their contacts with the ground instead of falling through it.
 - **Derailed bogeys losing their wheels.** A derailed bogey's wheel collider could stay wedged in the track while the car slid away; it is now moved back under its bogey.
 - **Derailed cars standing too high.** The wheel collision pads under a bogey are raised by half a block so a derailed car sits on its wheels.
+- **Invisible panel gauges and buttons, magenta-black parts on the turntable bearing** ([#8](https://github.com/Lyccoriis/Create-Loconautics/issues/8)). Partial models and sprite shifts are now created in the mod constructor; created during client setup they could miss the model bake.
+- **Portable storage interfaces on trains only working with a 1 block gap** ([#71](https://github.com/Lyccoriis/Create-Loconautics/issues/71)). They now connect across a 2 block gap like in Create.
+- **Copycat materials dropped on the ground when a train goes through a Nether portal** ([#69](https://github.com/Lyccoriis/Create-Loconautics/issues/69)). The temporary copy of the train no longer drops items when it is cleared.
+- **Scheduled trains running through Steam 'n' Rails track buffers** ([#96](https://github.com/Lyccoriis/Create-Loconautics/issues/96)). A buffer now counts as a red signal for scheduled trains.
 - **Diesel engine crash without Create Propulsion.** Placing, loading or viewing the engine in Ponder no longer crashes when Create Propulsion is not installed.
 - **Block variant exploit.** The server rejects variant-change packets that swap a block into a different block family (item duplication / conversion).
 - **Train relocation exploit.** The server checks that the player actually holds the Creative Train Relocator.
