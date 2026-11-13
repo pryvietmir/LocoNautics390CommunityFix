@@ -13,6 +13,7 @@
     "WheelSupportsMixin",
     "GhostWheelContactMixin",
     "StrayWheelRecallMixin",
+    "GhostWheelHeightMixin",
     "verify.Verify00",
     "verify.Verify01",
     "verify.Verify02",
